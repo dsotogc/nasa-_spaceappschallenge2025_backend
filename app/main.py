@@ -3,8 +3,18 @@ from .data_cliente import get_latest_mock, convertir_no2_a_aqi
 from fastapi.middleware.cors import CORSMiddleware
 from .models import LatestResponse, AQIResponse, Location
 from app.routers import no2_router, o3_router
+from no2_by_coordinates import get_no2
+from o3_by_coordinates import get_o3
+from get_aqi import compute_aqi
+
 
 app = FastAPI(title="NASA Air Quality Backend")
+
+def get_aqi_endpoint(lat: float, lon: float):
+    no2 = get_no2(lat, lon)
+    o3 = get_o3(lat, lon)
+    aqi = compute_aqi(no2, o3)
+    return {"aqi": round(aqi)}
 
 app.include_router(no2_router.router)
 
