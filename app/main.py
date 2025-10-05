@@ -2,11 +2,13 @@ from fastapi import FastAPI, Query
 from .data_cliente import get_latest_mock, convertir_no2_a_aqi
 from fastapi.middleware.cors import CORSMiddleware
 from .models import LatestResponse, AQIResponse, Location
-from app.routers import no2_router
+from app.routers import no2_router, o3_router
 
 app = FastAPI(title="NASA Air Quality Backend")
 
 app.include_router(no2_router.router)
+
+app.include_router(o3_router.router)
 
 app.add_middleware(
     CORSMiddleware,
