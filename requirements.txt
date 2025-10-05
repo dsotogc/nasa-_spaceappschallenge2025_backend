@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+httpx
+pydantic
+python-multipart
+# opcionales para datos/nubes:
+# boto3         # acceso a S3 si hace falta
+# s3fs          # para xarray <-> s3
+# xarray        # lectura netCDF/HDF (si necesitas)
+# netcdf4       # driver netCDF
+# aioredis      # si vas a cachear con Redis async
