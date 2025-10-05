@@ -3,7 +3,7 @@ from .data_cliente import get_latest_mock, convertir_no2_a_aqi
 from fastapi.middleware.cors import CORSMiddleware
 from .models import LatestResponse, AQIResponse, Location
 from app.routers import no2_router, o3_router
-from utils import no2_by_coordinates as no22, o3_by_coordinates as o33, get_aqi as aqii
+from .utils import no2_by_coordinates as no22, o3_by_coordinates as o33, get_aqi as aqii
 
 
 app = FastAPI(title="NASA Air Quality Backend")
@@ -32,14 +32,11 @@ async def get_latest(lat: float, lon: float):
     return data
 
 
-@app.post("/api/aqi", response_model=AQIResponse)
-def calcular_aqi(location: Location):
-    resultado = convertir_no2_a_aqi(location.no2_column_molecules_cm2)
-    return AQIResponse(
-        lat=location.lat,
-        lon=location.lon,
-        **resultado
-    )
+@app.get("/api/aqi")
+def calcular_aqi(lat: float = Query(...), lon: float = Query(...)):
+    """Calculate AQI using coordinates (combined NO2+O3) via utils.get_aqi.compute_aqi_from_coordinates."""
+    result = aqii.compute_aqi_from_coordinates(lat, lon)
+    return result
 
 @app.get("/")
 async def root():

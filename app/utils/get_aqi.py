@@ -40,3 +40,47 @@ def calculate_individual_aqi(conc, pollutant):
         if bp[0] <= conc <= bp[1]:
             return ((bp[3]-bp[2])/(bp[1]-bp[0]))*(conc-bp[0])+bp[2]
     return 500
+
+
+def compute_aqi_from_coordinates(lat: float, lon: float):
+    """Fetch NO2 and O3 for the given coordinates and compute a combined AQI.
+
+    Returns a dict with raw values and the computed AQI.
+    """
+    # Local imports to avoid top-level dependency issues
+    try:
+        from .no2_by_coordinates import get_no2_by_coordinates
+        from .o3_by_coordinates import get_o3_by_coordinates
+    except Exception:
+        return {"error": "utils not available"}
+
+    # Fetch values (utils may return a float or a dict)
+    no2_res = get_no2_by_coordinates(lat, lon)
+    if isinstance(no2_res, dict):
+        no2_val = no2_res.get('no2_molecules_cm2') or no2_res.get('no2_moleculas_cm2')
+    else:
+        no2_val = no2_res
+
+    o3_res = get_o3_by_coordinates(lat, lon)
+    if isinstance(o3_res, dict):
+        o3_val = o3_res.get('o3_du') or o3_res.get('O3_DU')
+    else:
+        o3_val = o3_res
+
+    # Validate
+    if no2_val is None or o3_val is None:
+        return {"error": "could not retrieve pollutant values", "no2": no2_res, "o3": o3_res}
+
+    # Compute combined AQI (uses existing helpers)
+    try:
+        aqi_value = compute_aqi(no2_val, o3_val)
+    except Exception as e:
+        return {"error": f"aqi computation failed: {e}"}
+
+    return {
+        "lat": lat,
+        "lon": lon,
+        "no2_molecules_cm2": no2_val,
+        "o3_du": o3_val,
+        "aqi": round(aqi_value)
+    }
