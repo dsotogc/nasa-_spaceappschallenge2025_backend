@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Query
-from .data_cliente import get_latest_mock, convertir_no2_a_aqi
 from fastapi.middleware.cors import CORSMiddleware
 from .models import LatestResponse, AQIResponse, Location
 from app.routers import no2_router, o3_router
@@ -25,12 +24,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-@app.get("/api/latest", response_model=LatestResponse)
-async def get_latest(lat: float, lon: float):
-    data = await get_latest_mock(lat, lon)
-    return data
-
 
 @app.get("/api/aqi")
 def calcular_aqi(lat: float = Query(...), lon: float = Query(...)):
