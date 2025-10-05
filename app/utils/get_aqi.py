@@ -1,6 +1,3 @@
-from no2_by_coordinates import get_no2
-from o3_by_coordinates import get_o3
-
 def no2_to_ppb(no2_molecules_cm2):
     # 1 molecula/cm2 ≈ 2.69e16 molecules/m3
     # Conversión aproximada a ppb para AQI

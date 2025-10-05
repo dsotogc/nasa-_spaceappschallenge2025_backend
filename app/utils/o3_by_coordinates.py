@@ -37,4 +37,4 @@ def get_o3_by_coordinates(lat: float, lon: float): # units are du
     O3_column = var[:]
 
     mean_o3 = float(np.nanmean(O3_column))
-    return {"lat": lat, "lon": lon, "date": date_end, "O3_DU": mean_o3}
+    return mean_o3

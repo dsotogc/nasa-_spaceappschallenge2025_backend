@@ -39,4 +39,4 @@ def get_no2_by_coordinates(lat: float, lon: float):
     tropospheric_no2 = np.where(tropospheric_no2 == fill_value, np.nan, tropospheric_no2)
 
     mean_no2 = float(np.nanmean(tropospheric_no2))
-    return {"lat": lat, "lon": lon, "date": date_end, "no2_molecules_cm2": mean_no2}
+    return mean_no2
