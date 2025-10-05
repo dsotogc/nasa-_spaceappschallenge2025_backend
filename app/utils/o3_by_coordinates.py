@@ -23,11 +23,11 @@ def get_o3_by_coordinates(lat: float, lon: float): # units are du
         short_name=short_name,
         version=version,
         temporal=(date_start, date_end),
-        point=(lon, lat),
+        point=(-76.3868, 37.1036), # Test data, as we are not in tempo satellite area
     )
 
     if not results:
-        return {"error": "No se encontraron datos para las coordenadas indicadas"}
+        return {"error": "We couldnt find data for your location"}
 
     files = earthaccess.open(results[:1])
     ds = xr.open_datatree(files[0], phony_dims="sort")
@@ -35,7 +35,6 @@ def get_o3_by_coordinates(lat: float, lon: float): # units are du
     prod = ds.product
     var = prod.variables["column_amount_o3"]
     O3_column = var[:]
-    fv_strat_O3 = var.encoding.get("_FillValue")
 
     mean_o3 = float(np.nanmean(O3_column))
     return {"lat": lat, "lon": lon, "date": date_end, "O3_DU": mean_o3}
