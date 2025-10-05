@@ -5,7 +5,6 @@ from datetime import datetime
 class Location(BaseModel):
     lat: float
     lon: float
-    no2_molecules_cm2: float
 
 class AirQualityReading(BaseModel):
     timestamp: datetime

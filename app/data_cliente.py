@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from .models import AirQualityReading
+from .models import AirQualityReading, Location, LatestResponse
 
 async def get_latest_mock(lat: float, lon: float):
     """
@@ -18,11 +18,9 @@ async def get_latest_mock(lat: float, lon: float):
         o3=10.0,
         co=0.3
     )
+    locationn = Location(lat=lat, lon=lon)
 
-    return {
-        "location": {"lat": lat, "lon": lon},
-        "readings": [reading]
-    }
+    return LatestResponse(location=locationn, readings=[reading])
 
 # app/utils/data_cliente.py
 
