@@ -23,6 +23,21 @@ class AQIResponse(BaseModel):
     aqi_value: float
     aqi_category: str
 
+
 class LatestResponse(BaseModel):
     location: Location
     readings: List[AirQualityReading]
+
+
+class NO2ByCoordinatesResponse(BaseModel):
+    lat: float
+    lon: float
+    date: str
+    no2_molecules_cm2: float
+
+
+class O3ByCoordinatesResponse(BaseModel):
+    lat: float
+    lon: float
+    date: str
+    o3_du: float
