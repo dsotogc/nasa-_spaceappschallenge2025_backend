@@ -68,7 +68,5 @@ El frontend (repositorio aparte) consumirá los endpoints de esta API para mostr
 dsotogc
 rasitoo
 
-(Aquí puedes listar otros miembros del equipo, responsables del frontend, diseño, etc.)
-
 📝 Licencia
 MIT License.
