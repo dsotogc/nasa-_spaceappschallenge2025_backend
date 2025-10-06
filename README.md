@@ -7,8 +7,8 @@ Este repositorio contiene la parte de **backend** del proyecto para la NASA Spac
 ## 🧰 Tecnologías utilizadas
 
 - Python  
-- FastAPI (u otro framework de API que hayas usado)  
-- Uvicorn (o similar para servidor ASGI)  
+- FastAPI 
+- Uvicorn 
 
 ---
 
